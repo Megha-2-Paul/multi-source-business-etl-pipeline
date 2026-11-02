@@ -1,9 +1,9 @@
-from openpyxl import Workbook
 import pandas as pd
 import pytest
+from openpyxl import Workbook
 
-from etl_pipeline.extractors.exceptions import SourceFileError
 from etl_pipeline.extractors.excel_extractor import extract_excel
+from etl_pipeline.extractors.exceptions import SourceFileError
 
 
 def test_reads_all_sheets_and_source_rows(tmp_path):
