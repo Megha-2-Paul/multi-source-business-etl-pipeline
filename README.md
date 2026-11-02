@@ -74,7 +74,7 @@ Unit tests now cover the extraction readers and mocked Frankfurter HTTP behavior
 - UCI Online Retail II is distributed under CC BY 4.0. Review [docs/data-sources.md](docs/data-sources.md) for attribution and download guidance.
 - The full source workbook is not stored in this repository.
 - Files under `data/samples/` are small synthetic reference examples and are explicitly marked as synthetic.
-- Frankfurter is planned for historical reference-rate enrichment. API behavior and date coverage must be verified when the API extractor is implemented.
+- Frankfurter v2 extraction is implemented for historical reference-rate retrieval. Pair-specific date coverage still needs a live check before enrichment.
 
 ## Security and data handling
 
