@@ -31,7 +31,7 @@ Run these commands from the repository root in PowerShell or a terminal.
 1. Create and activate a virtual environment:
 
    ```powershell
-   py -3.11 -m venv .venv
+   py -3 -m venv .venv
    .\.venv\Scripts\Activate.ps1
    ```
 
