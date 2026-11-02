@@ -8,7 +8,7 @@ The initial demonstration uses the public UCI Online Retail II transaction datas
 
 ## Current project status
 
-The repository contains the project plan, requirements and source documentation, sample reference files, project configuration, and initial PostgreSQL schema. Phase 3 implements source extraction for CSV, Excel, JSON, and the Frankfurter v2 API, with unit tests.
+The repository contains the project plan, requirements and source documentation, sample reference files, project configuration, and initial PostgreSQL schema. Phase 3 implements source extraction for CSV, Excel, JSON, and the Frankfurter v2 API, with unit tests. Phase 4 Step 1 adds a streaming workbook profiler; it does not yet implement source-specific transformations.
 
 **The end-to-end ETL application is not implemented yet.** Transformations, business validation, PostgreSQL loading, pipeline execution, and integration tests remain future phases. Do not treat the presence of a schema or package skeleton as a working pipeline.
 
@@ -67,7 +67,7 @@ python -m pytest
 python -m ruff check .
 ```
 
-Unit tests now cover the extraction readers and mocked Frankfurter HTTP behavior. Transformations, business validation, PostgreSQL integration, and end-to-end pipeline tests are not implemented yet.
+Unit tests cover the extraction readers, mocked Frankfurter HTTP behavior, and the workbook profiling utility. Transformations, business validation, PostgreSQL integration, and end-to-end pipeline tests are not implemented yet.
 
 ## Data and licensing
 
@@ -82,4 +82,4 @@ Credentials belong in environment variables or a secret manager. The committed `
 
 ## Limitations
 
-The repository now includes CSV, Excel, JSON, and Frankfurter v2 extraction modules with unit tests. It still does not provide a runnable end-to-end ETL command, database migration runner, database connection layer, transformations, business validation, PostgreSQL loading, or pipeline execution. The UCI workbook has not yet been profiled locally; this remains a prerequisite for source-specific header mapping.
+The repository now includes CSV, Excel, JSON, and Frankfurter v2 extraction modules with unit tests. It still does not provide a runnable end-to-end ETL command, database migration runner, database connection layer, transformations, business validation, PostgreSQL loading, or pipeline execution. The UCI workbook must be profiled locally before source-specific header mapping. Follow [docs/workbook-profiling.md](docs/workbook-profiling.md) to generate the local JSON profile; the workbook and generated report are excluded from Git.
