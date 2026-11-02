@@ -46,7 +46,11 @@ def extract_frankfurter_rates(
     Retries connection/timeouts and HTTP 429/selected 5xx responses at most
     max_attempts times. A caller-supplied session supports testing and reuse.
     """
-    start = date.fromisoformat(start_date) if isinstance(start_date, str) else start_date
+    start = (
+        date.fromisoformat(start_date)
+        if isinstance(start_date, str)
+        else start_date
+    )
     end = date.fromisoformat(end_date) if isinstance(end_date, str) else end_date
     if start > end:
         raise ValueError("start_date must be on or before end_date")
@@ -87,7 +91,9 @@ def extract_frankfurter_rates(
             time.sleep(_retry_delay(response.headers.get("Retry-After"), attempt))
             continue
         if response.status_code >= 400:
-            raise APIExtractionError(f"Frankfurter returned HTTP {response.status_code}")
+            raise APIExtractionError(
+                f"Frankfurter returned HTTP {response.status_code}"
+            )
         break
 
     try:
