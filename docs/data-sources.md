@@ -1,6 +1,6 @@
 # Data sources and constraints
 
-This document records the sources selected for the first demonstration. Source availability, exact workbook headers, and pair-specific API coverage must be checked again when extractors are implemented.
+This document records the sources selected for the first demonstration. Source availability, exact workbook headers, and pair-specific API coverage must be checked during integration and enrichment.
 
 ## 1. UCI Online Retail II — transaction workbook
 
