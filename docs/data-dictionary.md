@@ -69,7 +69,7 @@ Proposed normalized rate fields:
 | Provider attribution, when requested | provider_metadata | JSON | Preserve attribution metadata if requested from API. |
 | Retrieval time | retrieved_at | timestamp with time zone | Pipeline retrieval timestamp. |
 
-The exact v2 response structure must be confirmed against the live API before writing the extractor. Proposed natural key: rate_date + base_currency + quote_currency + provider selection. If multiple provider selections are supported, include the provider selection in the key or record metadata.
+The Frankfurter v2 extractor maps the response fields `date`, `base`, `quote`, and `rate` to the normalized fields shown above. Returned observations are checked against the requested date range and currency pair. Proposed natural key: rate_date + base_currency + quote_currency + provider selection. If multiple provider selections are supported, include the provider selection in the key or record metadata.
 
 Convert only when the matching date/pair rate is available:
 
@@ -99,3 +99,7 @@ Do not drop transactions because reference data or a rate is missing. Surface un
 - Normalized names use lowercase snake_case.
 
 This dictionary is a design baseline, not a claim that the source workbook has already been downloaded or profiled.
+
+## 7. Extraction metadata
+
+File extractors attach `_source_file` and `_source_row_number` to extracted rows. Excel extraction also attaches `_source_sheet`. These fields are technical lineage metadata, not business attributes. CSV row numbering counts the header as row 1; JSON row numbering is the 1-based array record position; Excel row numbering counts the header as row 1. The extractor rejects source columns that collide with these reserved names.
