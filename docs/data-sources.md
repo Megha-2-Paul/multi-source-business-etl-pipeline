@@ -76,13 +76,13 @@ The sample is not a real customer master file and must not be used to infer iden
 
 Official documentation: https://frankfurter.dev/
 
-The v2 documentation describes historical and time-series queries, filtering by base and quote currency, and provider attribution. Example request shape:
+The v2 endpoint used by this project is `GET /v2/rates`. Its date-range and currency filters are `from`, `to`, `base`, and `quotes`. The response is a JSON array of observations containing `date`, `base`, `quote`, and `rate`. Example request shape:
 
 ```text
 GET https://api.frankfurter.dev/v2/rates?from=2009-12-01&to=2011-12-09&base=GBP&quotes=USD
 ```
 
-This request shape is illustrative; actual date-range parameters, returned records, and GBP/USD coverage must be verified with the live API before implementation. Do not assume every transaction date has a returned rate. Check the API's pair-specific coverage and handle missing observations explicitly. Cache rates locally or in PostgreSQL rather than repeatedly requesting the same historical data.
+The extraction implementation uses this request shape. Actual GBP/USD date coverage must still be checked against the live API before enrichment is treated as complete. Do not assume every transaction date has a returned rate. Check the API's pair-specific coverage and handle missing observations explicitly. Cache rates locally or in PostgreSQL rather than repeatedly requesting the same historical data.
 
 Frankfurter rates are reference/mid-market data, not intraday trading quotes. They should not be presented as settlement, accounting, tax, or bank transaction rates without a separate business decision and appropriate provider/source review. The API documentation notes that individual provider routes may have their own terms; the initial design uses the default blended feed.
 
@@ -97,3 +97,7 @@ The initial combination provides:
 - PostgreSQL as the target database.
 
 This combination is sufficient to demonstrate multiple formats and a coherent transaction use case without inventing access to a private retailer system. The sample references are deliberately small; key coverage and actual API coverage remain implementation-time checks.
+
+## Extraction implementation status
+
+Phase 3 adds generic CSV, multi-worksheet Excel, JSON-array, and Frankfurter v2 readers. The UCI workbook itself has not yet been profiled in this environment; worksheet names and physical headers remain to be confirmed locally. See [extraction-design.md](extraction-design.md) for reader contracts and limitations.
