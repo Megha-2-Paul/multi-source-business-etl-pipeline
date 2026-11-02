@@ -85,6 +85,21 @@ def test_retryable_http_error_retries_and_is_bounded(monkeypatch, status):
     assert session.calls == 3
 
 
+def test_retry_after_header_is_used(monkeypatch):
+    delays = []
+    monkeypatch.setattr(
+        "etl_pipeline.extractors.frankfurter_extractor.time.sleep",
+        delays.append,
+    )
+    session = FakeSession([
+        FakeResponse(status=429, headers={"Retry-After": "2.5"}),
+        FakeResponse(payload=[]),
+    ])
+    extract_frankfurter_rates("2010-12-01", "2010-12-02", session=session)
+    assert delays == [2.5]
+    assert session.calls == 2
+
+
 def test_timeout_retries_then_succeeds(monkeypatch):
     monkeypatch.setattr(
         "etl_pipeline.extractors.frankfurter_extractor.time.sleep",
