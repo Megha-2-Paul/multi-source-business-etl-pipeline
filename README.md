@@ -8,15 +8,21 @@ The initial demonstration uses the public UCI Online Retail II transaction datas
 
 ## Current project status
 
-The repository currently contains the project plan, source and business requirements, data dictionary, and small sample reference files. Phase 2 establishes the application package structure, configuration conventions, and initial PostgreSQL schema.
+The repository contains the project plan, requirements and source documentation, sample reference files, project configuration, and initial PostgreSQL schema. Phase 3 implements source extraction for CSV, Excel, JSON, and the Frankfurter v2 API, with unit tests.
 
-**The ETL application is not implemented yet.** Extractors, transformations, validation, database loading, pipeline execution, and end-to-end tests will be added in subsequent approved phases. Do not treat the presence of a schema or package skeleton as a working pipeline.
+**The end-to-end ETL application is not implemented yet.** Transformations, business validation, PostgreSQL loading, pipeline execution, and integration tests remain future phases. Do not treat the presence of a schema or package skeleton as a working pipeline.
 
 ## Planned architecture
 
 The application is organized into separate modules for configuration, extraction, transformation, validation, loading, pipeline orchestration, database access, and shared utilities. See [docs/architecture.md](docs/architecture.md).
 
 The proposed relational design is documented in [docs/database-schema.md](docs/database-schema.md), with the initial DDL in [sql/schema/001_initial_schema.sql](sql/schema/001_initial_schema.sql).
+
+## Extraction readers
+
+The current readers are documented in [docs/extraction-design.md](docs/extraction-design.md). File inputs carry source-row metadata. The Frankfurter reader uses bounded retries and finite timeouts. Unit tests mock HTTP responses and do not require a live API.
+
+For local UCI workbook profiling, download `online_retail_II.xlsx` from the [official UCI dataset page](https://archive.ics.uci.edu/dataset/502/online+retail+ii) and save it as `data/raw/online_retail_II.xlsx`. The workbook is ignored by Git and must not be committed. Actual sheet names and headers have not yet been profiled; do not assume them.
 
 ## Requirements
 
@@ -61,7 +67,7 @@ python -m pytest
 python -m ruff check .
 ```
 
-There are no application tests yet. These commands establish the test and lint configuration; passing an empty test suite is not evidence of ETL functionality.
+Unit tests now cover the extraction readers and mocked Frankfurter HTTP behavior. Transformations, business validation, PostgreSQL integration, and end-to-end pipeline tests are not implemented yet.
 
 ## Data and licensing
 
@@ -76,4 +82,4 @@ Credentials belong in environment variables or a secret manager. The committed `
 
 ## Limitations
 
-This phase adds project configuration, package structure, architecture documentation, and a proposed PostgreSQL schema. It does not provide a runnable ETL command, database migration runner, database connection layer, source extractors, or pipeline execution. These limitations will be updated as features are implemented and tested.
+The repository now includes CSV, Excel, JSON, and Frankfurter v2 extraction modules with unit tests. It still does not provide a runnable end-to-end ETL command, database migration runner, database connection layer, transformations, business validation, PostgreSQL loading, or pipeline execution. The UCI workbook has not yet been profiled locally; this remains a prerequisite for source-specific header mapping.
