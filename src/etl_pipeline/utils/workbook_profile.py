@@ -89,11 +89,15 @@ def profile_workbook(
         for worksheet in workbook.worksheets:
             max_row = worksheet.max_row or 0
             max_column = worksheet.max_column or 0
-            rows = worksheet.iter_rows(
-                min_row=1,
-                max_row=max_row,
-                min_col=1,
-                max_col=max_column,
+            rows = (
+                worksheet.iter_rows(
+                    min_row=1,
+                    max_row=max_row,
+                    min_col=1,
+                    max_col=max_column,
+                )
+                if max_row and max_column
+                else iter(())
             )
             header_cells = next(rows, ())
             headers = [
@@ -113,6 +117,7 @@ def profile_workbook(
                     "non_empty_count": 0,
                     "null_count": 0,
                     "type_counts": Counter(),
+                    "number_format_counts": Counter(),
                     "sample_distinct": set(),
                     "sample_non_empty_count": 0,
                 }
@@ -156,6 +161,7 @@ def profile_workbook(
                     else:
                         stats["non_empty_count"] += 1
                         stats["type_counts"][_value_type(cell)] += 1
+                        stats["number_format_counts"][cell.number_format] += 1
 
                 if duplicate_scope_rows < duplicate_analysis_rows:
                     duplicate_scope_rows += 1
@@ -182,6 +188,9 @@ def profile_workbook(
                         "non_empty_count": stats["non_empty_count"],
                         "null_count": stats["null_count"],
                         "type_counts": dict(sorted(stats["type_counts"].items())),
+                        "number_format_counts": dict(
+                            sorted(stats["number_format_counts"].items())
+                        ),
                         "distinct_non_empty_values_in_duplicate_sample": distinct_count,
                         "repeated_non_empty_values_in_duplicate_sample": (
                             stats["sample_non_empty_count"] - distinct_count
