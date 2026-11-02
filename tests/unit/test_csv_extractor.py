@@ -23,7 +23,7 @@ def test_rejects_empty_or_malformed_csv(tmp_path, content):
 
 def test_source_row_number_tracks_blank_lines(tmp_path):
     path = tmp_path / "with-gap.csv"
-    path.write_text("id,value\\n001,a\\n\\n002,b\\n", encoding="utf-8")
+    path.write_text("id,value\n001,a\n\n002,b\n", encoding="utf-8")
     frame = extract_csv(path)
     assert frame["_source_row_number"].tolist() == [2, 4]
 
