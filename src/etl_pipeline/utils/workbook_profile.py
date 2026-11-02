@@ -146,7 +146,9 @@ def profile_workbook(
                             "values": [
                                 {
                                     "position": index,
-                                    "header": _json_value(header_cells[index - 1].value),
+                                    "header": _json_value(
+                                        header_cells[index - 1].value
+                                    ),
                                     "value": _json_value(value),
                                 }
                                 for index, value in enumerate(values, start=1)
@@ -245,8 +247,8 @@ def profile_workbook(
 def write_profile_report(profile: dict[str, Any], output_path: str | Path) -> Path:
     """Write a UTF-8 JSON profile report, creating its parent directory."""
     destination = Path(output_path)
-    destination.parent.mkdir(parents=True, exist_ok=True)
     try:
+        destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(
             json.dumps(profile, indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8",
