@@ -16,7 +16,8 @@ def _make_workbook(path: Path) -> None:
     sheet = workbook.active
     sheet.title = "Sales"
     sheet.append(["Invoice", "Date", "Amount", "Notes", ""])
-    sheet.append(["001", datetime(2024, 1, 2), 12.5, None, None])
+    sheet.append([1, datetime(2024, 1, 2), 12.5, None, None])
+    sheet["A2"].number_format = "00000"
     sheet.append(["002", datetime(2024, 1, 3), 18, "ok", None])
     sheet.append(["002", datetime(2024, 1, 3), 18, "ok", None])
     sheet.append([None, None, None, None, None])
@@ -39,13 +40,17 @@ def test_profile_reports_headers_types_nulls_and_samples(tmp_path: Path) -> None
         "value": "Invoice",
         "blank": False,
     }
-    assert sales["columns"][0]["type_counts"] == {"text": 3}
+    assert sales["columns"][0]["type_counts"] == {"numeric": 1, "text": 2}
+    assert sales["columns"][0]["number_format_counts"] == {
+        "00000": 1,
+        "General": 2,
+    }
     assert sales["columns"][2]["type_counts"] == {"numeric": 3}
     assert sales["columns"][3]["null_count"] == 1
     assert sales["non_empty_data_rows"] == 3
     assert sales["empty_data_rows"] == 1
     assert sales["sample_rows"][0]["source_row_number"] == 2
-    assert sales["sample_rows"][0]["values"][0]["value"] == "001"
+    assert sales["sample_rows"][0]["values"][0]["value"] == 1
 
 
 def test_profile_identifies_duplicate_rows_with_bounded_scope(tmp_path: Path) -> None:
