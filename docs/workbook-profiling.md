@@ -37,10 +37,10 @@ does not copy the workbook.
 
 - headers lists each physical header position and its original value.
   Blank and repeated header names are preserved; positions are authoritative.
-- columns reports non-empty counts, null counts, observed value types, and
-  whether a column is entirely empty. Date-like Excel cells are identified
-  using their cell formatting; numeric-looking identifiers remain numeric if
-  that is how the workbook stores them.
+- columns reports non-empty counts, null counts, observed value types, Excel
+  number-format counts, and whether a column is entirely empty. Number formats
+  help identify dates and numeric identifiers displayed with leading zeroes;
+  the underlying cell value and its display format remain separate facts.
 - sample_rows contains at most the requested number of non-empty rows, with
   physical worksheet row numbers and original column positions.
 - empty_data_rows counts blank rows after the header.
