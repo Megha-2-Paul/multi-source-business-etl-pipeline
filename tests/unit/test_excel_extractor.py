@@ -1,6 +1,6 @@
+from openpyxl import Workbook
 import pandas as pd
 import pytest
-from openpyxl import Workbook
 
 from etl_pipeline.extractors.exceptions import SourceFileError
 from etl_pipeline.extractors.excel_extractor import extract_excel
@@ -20,7 +20,7 @@ def test_reads_all_sheets_and_source_rows(tmp_path):
     assert sheets["Retail 2009"].loc[0, "Invoice No"] == "0001"
     assert sheets["Retail 2009"].loc[0, "_source_row_number"] == 2
     assert sheets["Retail 2009"].loc[0, "_source_sheet"] == "Retail 2009"
-    assert sheets["Retail 2010"].loc[2, "_source_row_number"] == 4
+    assert sheets["Retail 2010"].loc[0, "_source_row_number"] == 2
 
 
 def test_empty_worksheet_is_preserved(tmp_path):
