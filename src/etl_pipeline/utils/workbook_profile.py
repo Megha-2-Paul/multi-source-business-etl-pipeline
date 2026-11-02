@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from openpyxl import load_workbook
-from openpyxl.cell.cell import Cell
+from openpyxl.cell.read_only import ReadOnlyCell
 
 from etl_pipeline.extractors.exceptions import SourceFileError
 
@@ -31,7 +31,7 @@ def _json_value(value: Any) -> Any:
     return str(value)
 
 
-def _value_type(cell: Cell) -> str:
+def _value_type(cell: ReadOnlyCell) -> str:
     value = cell.value
     if value is None:
         return "blank"
