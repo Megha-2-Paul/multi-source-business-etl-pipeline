@@ -102,4 +102,4 @@ This dictionary is a design baseline, not a claim that the source workbook has a
 
 ## 7. Extraction metadata
 
-File extractors attach `_source_file` and `_source_row_number` to extracted rows. Excel extraction also attaches `_source_sheet`. These fields are technical lineage metadata, not business attributes. CSV row numbering counts the header as row 1; JSON row numbering is the 1-based array record position; Excel row numbering counts the header as row 1. The extractor rejects source columns that collide with these reserved names.
+File extractors attach `_source_file` and `_source_row_number` to extracted rows. Excel extraction also attaches `_source_sheet`. These fields are technical lineage metadata, not business attributes. CSV row numbering uses physical file line numbers (blank lines ignored); JSON row numbering is the 1-based array record position; Excel row numbering counts the header as row 1. The extractor rejects source columns that collide with these reserved names.
