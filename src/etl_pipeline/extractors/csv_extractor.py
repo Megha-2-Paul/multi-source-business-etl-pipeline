@@ -54,9 +54,13 @@ def extract_csv(path: str | Path, *, encoding: str = "utf-8") -> pd.DataFrame:
     if len(frame.columns) == 0:
         raise SourceFileError(f"CSV source has no columns: {source}")
     if frame.empty:
-        raise SourceFileError(f"CSV source contains a header but no data records: {source}")
+        raise SourceFileError(
+            f"CSV source contains a header but no data records: {source}"
+        )
     if len(frame) != len(data_row_numbers):
-        raise SourceFileError(f"CSV parser row count did not match source records: {source}")
+        raise SourceFileError(
+            f"CSV parser row count did not match source records: {source}"
+        )
     reserved = {"_source_file", "_source_row_number"}.intersection(frame.columns)
     if reserved:
         raise SourceFileError(
